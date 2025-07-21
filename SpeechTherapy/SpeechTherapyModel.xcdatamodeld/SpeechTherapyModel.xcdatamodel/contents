@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24B83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDPracticeWord" representedClassName="CDPracticeWord" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="phonemeIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="word" optional="YES" attributeType="String"/>
+        <relationship name="selectedConfigurations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PracticeConfiguration" inverseName="selectedWords" inverseEntity="PracticeConfiguration"/>
+    </entity>
+    <entity name="ConfigurationResult" representedClassName="ConfigurationResult" syncable="YES" codeGenerationType="class">
+        <attribute name="configurationID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="correctCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="phonemeSymbol" optional="YES" attributeType="String"/>
+        <attribute name="totalWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PracticeSession" inverseName="configurationResults" inverseEntity="PracticeSession"/>
+    </entity>
+    <entity name="PracticeConfiguration" representedClassName="PracticeConfiguration" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="level" optional="YES" attributeType="String"/>
+        <attribute name="phonemeName" optional="YES" attributeType="String"/>
+        <attribute name="phonemeSymbol" optional="YES" attributeType="String"/>
+        <attribute name="position" optional="YES" attributeType="String"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PracticeList" inverseName="configurations" inverseEntity="PracticeList"/>
+        <relationship name="selectedWords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDPracticeWord" inverseName="selectedConfigurations" inverseEntity="CDPracticeWord"/>
+    </entity>
+    <entity name="PracticeList" representedClassName="PracticeList" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="configurations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PracticeConfiguration" inverseName="list" inverseEntity="PracticeConfiguration"/>
+        <relationship name="sessions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PracticeSession" inverseName="list" inverseEntity="PracticeSession"/>
+    </entity>
+    <entity name="PracticeSession" representedClassName="PracticeSession" syncable="YES" codeGenerationType="class">
+        <attribute name="correctCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="incorrectCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="skippedCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalWords" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="configurationResults" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ConfigurationResult" inverseName="session" inverseEntity="ConfigurationResult"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PracticeList" inverseName="sessions" inverseEntity="PracticeList"/>
+    </entity>
+</model>
